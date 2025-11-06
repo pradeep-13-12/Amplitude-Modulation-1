@@ -75,22 +75,87 @@ Compare the original modulating signal with the demodulated signal. PROCEDURE
 •	Verify the generated waveform using Tabulation and Model Waveform
 
 Program
+clc;
+clear;
+close;
+
+//==============================
+// AMPLITUDE MODULATION (AM)
+//==============================
+
+//--- Given Parameters ---
+Am = 8.9;          // Message amplitude
+Ac = 17.8;         // Carrier amplitude
+Fm = 550;          // Message frequency (Hz)
+Fc = 5500;         // Carrier frequency (Hz)
+Fs = 54000;        // Sampling frequency (Hz)
+
+//--- Time vector (5 ms duration) ---
+t = 0:1/Fs:0.005;
+
+//==============================
+// SIGNAL GENERATION
+//==============================
+
+//--- Message Signal ---
+m = Am * sin(2 * %pi * Fm * t);
+
+//--- Carrier Signal ---
+c = Ac * sin(2 * %pi * Fc * t);
+
+//--- AM Modulated Signal ---
+s = Ac * (1 + (Am/Ac) * sin(2 * %pi * Fm * t)) .* sin(2 * %pi * Fc * t);
+
+//==============================
+// PLOTTING
+//==============================
+subplot(3,1,1);
+plot(t, m);
+title('Message Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+xgrid();
+
+subplot(3,1,2);
+plot(t, c);
+title('Carrier Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+xgrid();
+
+subplot(3,1,3);
+plot(t, s);
+title('AM Modulated Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+xgrid();
+
+//==============================
+// DISPLAY VALUES IN TABLE FORMAT
+//==============================
+disp("   Time(s)     Message(V)   Carrier(V)   Modulated(V)");
+for i = 1:10:length(t)   // Display every 10th sample for clarity
+    mprintf("%10.6f   %10.4f   %10.4f   %10.4f\n", t(i), m(i), c(i), s(i));
+end
+
 
 
 
 Output Waveform
+<img width="1218" height="1113" alt="Screenshot 2025-11-06 091514" src="https://github.com/user-attachments/assets/eb468252-078f-45df-8a89-e1aff32378f9" />
 
 
 
 
 
 TABULATION:
+![am](https://github.com/user-attachments/assets/e267197e-bea7-43b5-90c0-5eed5635bae4)
 
 
 
 Calculation
-1.	ma (Theory) = am/ac =
-2.	ma(Practical) = (Emax-Emin)/(Emax+Emin) =
+1.	ma (Theory) = am/ac =0.5
+2.	ma(Practical) = (Emax-Emin)/(Emax+Emin) =0.5
 
 
 MODEL GRAPH
