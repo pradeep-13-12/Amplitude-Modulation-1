@@ -76,29 +76,72 @@ Compare the original modulating signal with the demodulated signal. PROCEDURE
 
 Program
 
-clc; clear; close;
+```scilab
+clc;
+clear;
+close;
 
-//============================== // AMPLITUDE MODULATION (AM) //==============================
+//==============================
+// AMPLITUDE MODULATION (AM)
+//==============================
 
-//--- Given Parameters --- Am = 8.9; // Message amplitude Ac = 17.8; // Carrier amplitude Fm = 550; // Message frequency (Hz) Fc = 5500; // Carrier frequency (Hz) Fs = 54000; // Sampling frequency (Hz)
+//--- Given Parameters ---
+Am = 8.9;   // Message amplitude
+Ac = 17.8;  // Carrier amplitude
+Fm = 550;   // Message frequency (Hz)
+Fc = 5500;  // Carrier frequency (Hz)
+Fs = 54000; // Sampling frequency (Hz)
 
-//--- Time vector (5 ms duration) --- t = 0:1/Fs:0.005;
+//--- Time vector (5 ms duration) ---
+t = 0:1/Fs:0.005;
 
-//============================== // SIGNAL GENERATION //==============================
+//==============================
+// SIGNAL GENERATION
+//==============================
 
-//--- Message Signal --- m = Am * sin(2 * %pi * Fm * t);
+//--- Message Signal ---
+m = Am * sin(2 * %pi * Fm * t);
 
-//--- Carrier Signal --- c = Ac * sin(2 * %pi * Fc * t);
+//--- Carrier Signal ---
+c = Ac * sin(2 * %pi * Fc * t);
 
-//--- AM Modulated Signal --- s = Ac * (1 + (Am/Ac) * sin(2 * %pi * Fm * t)) .* sin(2 * %pi * Fc * t);
+//--- AM Modulated Signal ---
+s = Ac * (1 + (Am/Ac) * sin(2 * %pi * Fm * t)) .* sin(2 * %pi * Fc * t);
 
-//============================== // PLOTTING //============================== subplot(3,1,1); plot(t, m); title('Message Signal'); xlabel('Time (s)'); ylabel('Amplitude'); xgrid();
+//==============================
+// PLOTTING
+//==============================
+subplot(3,1,1);
+plot(t, m);
+title('Message Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+xgrid();
 
-subplot(3,1,2); plot(t, c); title('Carrier Signal'); xlabel('Time (s)'); ylabel('Amplitude'); xgrid();
+subplot(3,1,2);
+plot(t, c);
+title('Carrier Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+xgrid();
 
-subplot(3,1,3); plot(t, s); title('AM Modulated Signal'); xlabel('Time (s)'); ylabel('Amplitude'); xgrid();
+subplot(3,1,3);
+plot(t, s);
+title('AM Modulated Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+xgrid();
 
-//============================== // DISPLAY VALUES IN TABLE FORMAT //============================== disp(" Time(s) Message(V) Carrier(V) Modulated(V)"); for i = 1:10:length(t) // Display every 10th sample for clarity mprintf("%10.6f %10.4f %10.4f %10.4f\n", t(i), m(i), c(i), s(i)); end
+//==============================
+// DISPLAY VALUES IN TABLE FORMAT
+//==============================
+disp(" Time(s)    Message(V)   Carrier(V)   Modulated(V)");
+
+for i = 1:10:length(t) // Display every 10th sample for clarity
+    mprintf("%10.6f   %10.4f   %10.4f   %10.4f\n", t(i), m(i), c(i), s(i));
+end
+```
+
 
 Output Waveform
 
